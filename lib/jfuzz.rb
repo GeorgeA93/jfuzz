@@ -23,23 +23,8 @@ module Jfuzz
     def fuzz
       result = {}
 
-      schema["properties"].each do |key, value|
-        type = value["type"]
-        fuzzed_value = case type
-        when "boolean"
-          random_boolean
-        when "integer"
-          random_integer
-        when "number"
-          random_float
-        when "string"
-          random_string
-        when "array"
-          [random_string, random_string]
-        else
-          raise "Cannot handle type #{type}"
-        end
-
+      schema["properties"].each do |key, property|
+        fuzzed_value = get_random_value(property)
         result[key] = fuzzed_value
       end
 
@@ -49,6 +34,35 @@ module Jfuzz
     private
 
     attr_reader :schema
+
+    def get_random_value(property)
+      type = property["type"]
+      case type
+      when "boolean"
+        random_boolean
+      when "integer"
+        random_integer
+      when "number"
+        random_float
+      when "string"
+        random_string
+      when "array"
+        arr = []
+        (0..10).each do
+          arr << get_random_value(property["items"])
+        end
+        arr
+      when "object"
+        obj = {}
+        property["properties"].each do |key, nested_prop|
+          value = get_random_value(nested_prop)
+          obj[key] = value
+        end
+        obj
+      else
+        raise "Cannot handle type #{type}"
+      end
+    end
 
     def random_integer(lower = Integer::MIN, upper = Integer::MAX)
       rand(lower..upper)

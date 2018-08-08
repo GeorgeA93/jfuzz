@@ -8,7 +8,7 @@ RSpec.describe Jfuzz do
 
     it "does a thing" do
       res = fuzz
-      puts res
+      require 'pry'; binding.pry
       expect(1).to eq(1)
     end
   end
