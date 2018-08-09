@@ -30,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "json_schema", "~> 0.17"
+  spec.add_dependency "regexp-examples", "~> 1.4.3"
 
   spec.add_development_dependency "bundler", "~> 1.14"
   spec.add_development_dependency "pry", "~> 0.9.10"
