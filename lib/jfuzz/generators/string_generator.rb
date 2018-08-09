@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
+require "regexp-examples"
 require "jfuzz/generators/generator"
 
 module Jfuzz 
   class StringGenerator < Generator
     def generate
-      (lower_bound...upper_bound).map { (65 + rand(26)).chr }.join
+      return generate_string if pattern.nil?
+
+      generate_from_regex
     end
 
     def self.type
@@ -14,12 +17,25 @@ module Jfuzz
 
     private
 
-    def upper_bound
-      rand(0..100)
+    def generate_string
+      length = rand(min_length..max_length)
+      (0...length).map { (65 + rand(26)).chr }.join
     end
 
-    def lower_bound
-      0
+    def generate_from_regex
+      Regexp.new(pattern).random_example
+    end
+
+    def max_length
+      property.fetch("maxLength", rand(min_length..100))
+    end
+
+    def min_length
+      property.fetch("minLength", 1)
+    end
+
+    def pattern
+      property.fetch("pattern", nil)
     end
   end
 end
