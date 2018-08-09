@@ -5,7 +5,7 @@ require "jfuzz/generators/generator"
 module Jfuzz
   class NumberGenerator < Generator
     def generate
-      true
+      0.0
     end
     
     def self.type

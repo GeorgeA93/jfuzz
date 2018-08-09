@@ -20,6 +20,8 @@ module Jfuzz
       DATE_TIME => DATE_TIME_REGEXP,
     }.freeze
 
+    CHARSET = Array('A'..'Z') + Array('a'..'z') + Array(0..9)
+
     def generate
       return generate_string unless regex?
 
@@ -34,7 +36,7 @@ module Jfuzz
 
     def generate_string
       length = rand(min_length..max_length)
-      (0...length).map { (65 + rand(26)).chr }.join
+      Array.new(length) { CHARSET.sample }.join
     end
 
     def generate_from_regex

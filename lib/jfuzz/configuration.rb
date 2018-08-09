@@ -7,10 +7,12 @@ module Jfuzz
     def initialize
       @generators = {}
       @nil_probability = 0
+      @true_probability = 0
     end
 
     attr_reader :generators
 
-    attr_accessor :nil_probability
+    attr_accessor :nil_probability,
+                  :true_probability
   end
 end

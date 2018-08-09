@@ -26,6 +26,7 @@ module Jfuzz
   class << self
     delegate :generators,
              :nil_probability,
+             :true_probability,
              to: :configuration
   end
 
@@ -36,6 +37,10 @@ module Jfuzz
 
   def self.set_nil_probability(val)
     configuration.nil_probability = val
+  end
+
+  def self.set_true_probability(val)
+    configuration.true_probability = val
   end
 
   def self.register_default_generators
@@ -50,6 +55,7 @@ module Jfuzz
 
   def self.set_defaults
     set_nil_probability(0.2)
+    set_true_probability(0.5)
 
     register_default_generators
   end
