@@ -5,8 +5,23 @@ require "jfuzz/generators/generator"
 
 module Jfuzz 
   class StringGenerator < Generator
+
+    DATE_REGEXP = /\A\d{4}-\d{2}-\d{2}\z/
+    TIME_REGEXP = /\A(\d{2}):(\d{2}):(\d{2})\z/
+    DATE_TIME_REGEXP = /\A\d{4}-\d{2}-\d{2}T(\d{2}):(\d{2}):(\d{2})([\.,]\d+)?(Z|[+-](\d{2})(:?\d{2})?)?\z/
+
+    DATE = "date"
+    TIME = "time"
+    DATE_TIME = "date-time"
+
+    FORMATS = {
+      DATE => DATE_REGEXP,
+      TIME => TIME_REGEXP,
+      DATE_TIME => DATE_TIME_REGEXP,
+    }.freeze
+
     def generate
-      return generate_string if pattern.nil?
+      return generate_string unless regex?
 
       generate_from_regex
     end
@@ -23,7 +38,11 @@ module Jfuzz
     end
 
     def generate_from_regex
-      Regexp.new(pattern).random_example
+      if format.to_s.empty?
+        return Regexp.new(pattern).random_example
+      end
+
+      FORMATS[format].random_example
     end
 
     def max_length
@@ -34,8 +53,16 @@ module Jfuzz
       property.fetch("minLength", 1)
     end
 
+    def regex?
+      !pattern.nil? || !format.nil?
+    end
+
     def pattern
       property.fetch("pattern", nil)
+    end
+
+    def format
+      property.fetch("format", nil)
     end
   end
 end
