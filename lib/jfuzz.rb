@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require "jfuzz/version"
 require "json_schema"
 
 module Jfuzz
   class Integer
-    N_BYTES = [42].pack('i').size
+    N_BYTES = [42].pack("i").size
     N_BITS = N_BYTES * 16
-    MAX = 2 ** (N_BITS - 2) - 1
+    MAX = 2**(N_BITS - 2) - 1
     MIN = -MAX - 1
   end
 
@@ -48,7 +50,7 @@ module Jfuzz
         random_string
       when "array"
         arr = []
-        (0..10).each do
+        11.times do
           arr << get_random_value(property["items"])
         end
         arr
@@ -73,14 +75,12 @@ module Jfuzz
     end
 
     def random_string(lower = 0, upper = 100)
-      (lower...upper).map { (65 + rand(26)).chr }.join
+      (lower...upper).map { rand(65..90).chr }.join
     end
 
     def random_boolean
       a = rand(0..1)
-      if a == 0
-        true
-      end
+      true if a == 0
       false
     end
   end
