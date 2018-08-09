@@ -11,6 +11,10 @@ module Jfuzz
     end
 
     def fuzz
+      if schema_path.to_s.nil?
+        raise "Schema path cannot be nil or empty"
+      end
+
       schema_contents = File.read(schema_path)
       schema = JSON.parse(schema_contents)
 
