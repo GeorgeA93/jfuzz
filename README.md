@@ -1,6 +1,6 @@
-# Jfuzz
+# jfuzz
 
-FOO!
+Generate random data from your JSON schemas.
 
 ## Installation
 
@@ -20,7 +20,20 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+require "jfuzz"
+
+schema_path = "path/to/your/json-schema"
+Jfuzz.fuzz(schema_path)
+```
+
+### Configuration
+
+TODO Describe how to change config
+
+### Generators
+
+TODO Describe how to add/edit generators
 
 ## Development
 
