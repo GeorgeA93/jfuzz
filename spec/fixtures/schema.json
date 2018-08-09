@@ -1,88 +1,57 @@
 {
-  "definitions": {},
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "http://example.com/example.json",
-  "type": "object",
+  "additionalProperties": false,
   "properties": {
-    "checked": {
-      "$id": "/properties/checked",
-      "type": "boolean",
-      "title": "The Checked Schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": false,
-      "examples": [
-        false
-      ]
+    "report_type": {
+      "description": "The type of report this entry is from.",
+      "enum": ["ca_pad_rbc_debit_ackowledgement_report"]
     },
-    "dimensions": {
-      "$id": "/properties/dimensions",
-      "type": "object",
-      "properties": {
-        "width": {
-          "$id": "/properties/dimensions/properties/width",
-          "type": "integer",
-          "title": "The Width Schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            5
-          ]
-        },
-        "height": {
-          "$id": "/properties/dimensions/properties/height",
-          "type": "integer",
-          "title": "The Height Schema",
-          "description": "An explanation about the purpose of this instance.",
-          "default": 0,
-          "examples": [
-            10
-          ]
-        }
-      }
+    "type": {
+      "description": "Validation report result code",
+      "enum": ["accepted", "confirmed", "rejected", "pending"]
     },
-    "id": {
-      "$id": "/properties/id",
-      "type": "integer",
-      "title": "The Id Schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": 0,
-      "examples": [
-        1
-      ]
+    "amount": {
+      "description": "Amount in cents",
+      "type": "integer"
     },
-    "name": {
-      "$id": "/properties/name",
-      "type": "string",
-      "title": "The Name Schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": "",
-      "examples": [
-        "A green door"
-      ]
+    "requested_collection_date": {
+      "description": "Debit collection date (YYYY-MM-DD)",
+      "type": "string"
     },
-    "price": {
-      "$id": "/properties/price",
-      "type": "number",
-      "title": "The Price Schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": 0,
-      "examples": [
-        12.5
-      ]
+    "internal_reference": {
+      "description": "End to end debit id",
+      "type": "string"
     },
-    "tags": {
-      "$id": "/properties/tags",
-      "type": "array",
-      "items": {
-        "$id": "/properties/tags/items",
-        "type": "string",
-        "title": "The 0 Schema",
-        "description": "An explanation about the purpose of this instance.",
-        "default": "",
-        "examples": [
-          "home"
-        ]
-      }
+    "date_time": {
+      "description": "Report creation date time (YYYY-MM-DD HH:MM:SS +1100)",
+      "type": "string"
+    },
+    "message_id": {
+      "description": "Unique id assigned by RBC to the report",
+      "type": "string"
+    },
+    "original_message_id": {
+      "description": "Message id from the submission pain_001 file",
+      "type": "string"
+    },
+    "reason_code": {
+      "description": "Rejection reason code",
+      "type": "string"
+    },
+    "additional_info": {
+      "description": "Rejection reason explanation",
+      "type": "string"
     }
-  }
+  },
+  "type": "object",
+  "required": [
+    "report_type",
+    "type",
+    "date_time",
+    "message_id",
+    "internal_reference",
+    "amount",
+    "requested_collection_date",
+    "original_message_id"
+  ]
 }
