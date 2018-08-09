@@ -24,12 +24,18 @@ module Jfuzz
   end
 
   class << self
-    delegate :generators, to: :configuration
+    delegate :generators,
+             :nil_probability,
+             to: :configuration
   end
 
   def self.register_generator(generator_klass)
     type = generator_klass.type
     generators[type] = generator_klass
+  end
+
+  def self.set_nil_probability(val)
+    configuration.nil_probability = val
   end
 
   def self.register_default_generators
@@ -41,6 +47,12 @@ module Jfuzz
     register_generator(ArrayGenerator)
     register_generator(StringGenerator)
   end
+
+  def self.set_defaults
+    set_nil_probability(0.2)
+
+    register_default_generators
+  end
 end
 
-Jfuzz.register_default_generators
+Jfuzz.set_defaults

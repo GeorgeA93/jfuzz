@@ -2,7 +2,7 @@
 
 module Jfuzz
   class PropertyFuzzer
-    def fuzz_property(property)
+    def fuzz_property(property, required)
       type = property["type"]
 
       generator = Jfuzz.generators.fetch(type, nil)
@@ -11,7 +11,7 @@ module Jfuzz
         return
       end
       
-      generator.new(property).generate
+      generator.new(property, required).try_generate
     end
 
     private
