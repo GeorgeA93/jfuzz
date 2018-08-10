@@ -7,8 +7,7 @@ module Jfuzz
 
       generator = Jfuzz.generators.fetch(type, nil)
       if generator.nil?
-        # raise "No generator for type #{type}"
-        return
+        raise "No generator for type #{type}"
       end
       
       generator.new(property, self).try_generate
@@ -19,10 +18,14 @@ module Jfuzz
     def type(property)
       t = property["type"]
 
-      if t.nil?
-        # Try figure out enums here?
+      if t.nil? && enum?(property)
+        t = "enum"
       end
       t
+    end
+
+    def enum?(property)
+      property.fetch("enum", []).any?
     end
   end
 end

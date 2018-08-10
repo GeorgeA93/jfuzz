@@ -67,6 +67,11 @@
       "minLength": "4",
       "maxLength": "25"
     },
+    "thing": {
+      "$id": "/properties/thing",
+      "title": "The thing Schema ",
+      "enum": ["thing_1", "thing_2", "thing_3"]
+    },
     "price": {
       "$id": "/properties/price",
       "type": "number",
@@ -96,6 +101,7 @@
     "dimensions",
     "id",
     "name",
+    "thing",
     "price",
     "tags"
   ]
