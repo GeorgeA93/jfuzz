@@ -8,13 +8,23 @@ module Jfuzz
       result = {}
       required_keys = property.fetch("required", [])
       property["properties"].each do |key, value|
-        result[key] = property_fuzzer.fuzz_property(value, required_keys)
+        next if skip?(key, required_keys)
+
+        result[key] = property_fuzzer.fuzz_property(value)
       end
       result
     end
 
     def self.type
       "object"
+    end
+
+    private
+
+    def skip?(key, required_keys)
+      return false if required_keys.include?(key)
+
+      rand <= Jfuzz.nil_probability
     end
   end
 end

@@ -2,15 +2,12 @@
 
 module Jfuzz
   class Generator
-    def initialize(property, required, property_fuzzer)
+    def initialize(property, property_fuzzer)
       @property = property
-      @required = required
       @property_fuzzer = property_fuzzer
     end
 
     def try_generate
-      return nil if return_nil?
-
       generate
     end
 
@@ -25,15 +22,5 @@ module Jfuzz
     end
 
     attr_reader :property, :property_fuzzer
-
-    def return_nil?
-      return false if required?
-
-      rand <= Jfuzz.nil_probability
-    end
-
-    def required?
-      @required
-    end
   end
 end

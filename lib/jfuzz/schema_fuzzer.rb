@@ -2,6 +2,7 @@
 
 require "json"
 require "jfuzz/property_fuzzer"
+require "jfuzz/generators/object_generator"
 
 module Jfuzz
   class SchemaFuzzer
@@ -17,13 +18,8 @@ module Jfuzz
 
       schema_contents = File.read(schema_path)
       schema = JSON.parse(schema_contents)
-      required_keys = schema.fetch("required", [])
 
-      result = {}
-      schema["properties"].each do |key, property|
-        result[key] = property_fuzzer.fuzz_property(property, required_keys)
-      end
-      result
+      ObjectGenerator.new(schema, property_fuzzer).generate
     end
 
     private

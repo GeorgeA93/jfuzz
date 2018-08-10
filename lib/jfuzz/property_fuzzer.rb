@@ -2,9 +2,8 @@
 
 module Jfuzz
   class PropertyFuzzer
-    def fuzz_property(property, required_keys)
+    def fuzz_property(property)
       type = type(property)
-      required = property_required?(property, required_keys)
 
       generator = Jfuzz.generators.fetch(type, nil)
       if generator.nil?
@@ -12,7 +11,7 @@ module Jfuzz
         return
       end
       
-      generator.new(property, required, self).try_generate
+      generator.new(property, self).try_generate
     end
 
     private
@@ -24,10 +23,6 @@ module Jfuzz
         # Try figure out enums here?
       end
       t
-    end
-
-    def property_required?(property, required_keys)
-      required_keys.include?(property)
     end
   end
 end
