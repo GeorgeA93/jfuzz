@@ -21,8 +21,7 @@ module Jfuzz
 
       result = {}
       schema["properties"].each do |key, property|
-        required = property_required?(key, required_keys)
-        result[key] = property_fuzzer.fuzz_property(property, required)
+        result[key] = property_fuzzer.fuzz_property(property, required_keys)
       end
       result
     end
@@ -30,9 +29,5 @@ module Jfuzz
     private
 
     attr_reader :schema_path, :property_fuzzer
-
-    def property_required?(property, required_keys)
-      required_keys.include?(property)
-    end
   end
 end

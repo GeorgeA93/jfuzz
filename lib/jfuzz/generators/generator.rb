@@ -2,9 +2,10 @@
 
 module Jfuzz
   class Generator
-    def initialize(property, required)
+    def initialize(property, required, property_fuzzer)
       @property = property
       @required = required
+      @property_fuzzer = property_fuzzer
     end
 
     def try_generate
@@ -23,7 +24,7 @@ module Jfuzz
       raise "`generate` must be implemented by sub class"
     end
 
-    attr_reader :property
+    attr_reader :property, :property_fuzzer
 
     def return_nil?
       return false if required?
