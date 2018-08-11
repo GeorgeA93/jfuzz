@@ -79,7 +79,10 @@
       "default": 0,
       "examples": [
         12.5
-      ]
+      ],
+      "multipleOf": "0.01",
+      "maximum": 1203,
+      "minimum": 10
     },
     "tags": {
       "$id": "/properties/tags",

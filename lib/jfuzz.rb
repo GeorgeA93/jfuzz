@@ -42,6 +42,14 @@ module Jfuzz
   def self.set_true_probability(val)
     configuration.true_probability = val
   end
+  
+  def self.set_min_integer(val)
+    configuration.min_integer = val
+  end
+
+  def self.set_max_integer(val)
+    configuration.max_integer = val
+  end
 
   def self.register_default_generators
     register_generator(BooleanGenerator)
@@ -56,6 +64,8 @@ module Jfuzz
   def self.set_defaults
     set_nil_probability(0.2)
     set_true_probability(0.5)
+    set_min_integer(-9999999)
+    set_max_integer(9999999)
 
     register_default_generators
   end
