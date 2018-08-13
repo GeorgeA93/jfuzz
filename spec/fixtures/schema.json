@@ -65,8 +65,7 @@
       "type": "string",
       "title": "The testing Schema ",
       "minLength": "4",
-      "maxLength": "25"
-    },
+      "maxLength": "25" },
     "thing": {
       "$id": "/properties/thing",
       "title": "The thing Schema ",
@@ -97,6 +96,26 @@
           "green"
         ]
       }
+    },
+    "address": {
+      "$id": "/properties/address",
+      "type": "array",
+      "items": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "string",
+          "enum": ["Street", "Avenue", "Boulevard"]
+        },
+        {
+          "type": "string",
+          "enum": ["NW", "NE", "SW", "SE"]
+        }
+      ]
     }
   },
   "required": [
@@ -106,6 +125,7 @@
     "name",
     "thing",
     "price",
-    "tags"
+    "tags",
+    "address"
   ]
 }

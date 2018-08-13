@@ -27,6 +27,10 @@ module Jfuzz
     delegate :generators,
              :nil_probability,
              :true_probability,
+             :min_integer,
+             :max_integer,
+             :min_array_length,
+             :max_array_length,
              to: :configuration
   end
 
@@ -51,6 +55,14 @@ module Jfuzz
     configuration.max_integer = val
   end
 
+  def self.set_min_array_length(val)
+    configuration.min_array_length = val
+  end
+
+  def self.set_max_array_length(val)
+    configuration.max_array_length = val
+  end
+
   def self.register_default_generators
     register_generator(BooleanGenerator)
     register_generator(IntegerGenerator)
@@ -66,6 +78,8 @@ module Jfuzz
     set_true_probability(0.5)
     set_min_integer(-9999999)
     set_max_integer(9999999)
+    set_min_array_length(1)
+    set_max_array_length(100)
 
     register_default_generators
   end

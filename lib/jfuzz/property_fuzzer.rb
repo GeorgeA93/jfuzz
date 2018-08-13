@@ -18,7 +18,7 @@ module Jfuzz
     def type(property)
       t = property["type"]
 
-      if t.nil? && enum?(property)
+      if enum?(property)
         t = "enum"
       end
       t
