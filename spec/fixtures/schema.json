@@ -21,15 +21,21 @@
           "$id": "/properties/dimensions/properties/width",
           "type": "integer",
           "title": "The Width Schema ",
+          "multipleOf": 10,
+          "maximum": "250",
+          "minimum": "10",
           "default": 0
         },
         "height": {
           "$id": "/properties/dimensions/properties/height",
           "type": "integer",
           "title": "The Height Schema ",
+          "multipleOf": 4,
+          "maximum": "250",
+          "minimum": "4",
           "default": 0,
           "examples": [
-            10
+            8
           ]
         }
       },
