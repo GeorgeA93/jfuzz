@@ -119,3 +119,9 @@ RSpec/MessageSpies:
 
 RSpec/Pending:
   Enabled: true
+
+Metrics/MethodLength:
+  Max: 58
+
+Naming/AccessorMethodName:
+  Enabled: false

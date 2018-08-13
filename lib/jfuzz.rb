@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_support/core_ext/module/delegation'
+require "active_support/core_ext/module/delegation"
 
 require "jfuzz/version"
 require "jfuzz/configuration"
@@ -13,14 +13,13 @@ require "jfuzz/generators/object_generator"
 require "jfuzz/generators/array_generator"
 require "jfuzz/generators/string_generator"
 
-
 module Jfuzz
   def self.configuration
     @configuration ||= Configuration.new
   end
 
   def self.fuzz(schema_path)
-   SchemaFuzzer.new(schema_path).fuzz
+    SchemaFuzzer.new(schema_path).fuzz
   end
 
   class << self
@@ -46,7 +45,7 @@ module Jfuzz
   def self.set_true_probability(val)
     configuration.true_probability = val
   end
-  
+
   def self.set_min_integer(val)
     configuration.min_integer = val
   end

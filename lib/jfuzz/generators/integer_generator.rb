@@ -8,7 +8,7 @@ module Jfuzz
     def generate
       random_integer
     end
-    
+
     def self.type
       "integer"
     end
@@ -18,12 +18,8 @@ module Jfuzz
     def random_integer
       min = minimum
       max = maximum
-      if exclusive_minimum?
-        min + 1
-      end
-      if exclusive_maximum?
-        max - 1
-      end
+      min + 1 if exclusive_minimum?
+      max - 1 if exclusive_maximum?
 
       return generate_multiple(min, max) if multiple_of?
 
@@ -33,22 +29,18 @@ module Jfuzz
     def generate_multiple(min, max)
       factor = property.fetch("multipleOf").to_i
 
-      min = min / factor
-      max = max / factor
+      min /= factor
+      max /= factor
       rand(min..max).to_i * factor
     end
 
     def minimum
-      if minimum?
-        return property.fetch("minimum").to_i
-      end
+      return property.fetch("minimum").to_i if minimum?
       Jfuzz.min_integer.to_i
     end
 
     def maximum
-      if maximum?
-        return property.fetch("maximum").to_i
-      end
+      return property.fetch("maximum").to_i if maximum?
       Jfuzz.max_integer.to_i
     end
 

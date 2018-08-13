@@ -5,9 +5,7 @@ require "jfuzz/generators/generator"
 module Jfuzz
   class BooleanGenerator < Generator
     def generate
-      if rand < Jfuzz.true_probability
-        return true
-      end
+      return true if rand < Jfuzz.true_probability
       false
     end
 

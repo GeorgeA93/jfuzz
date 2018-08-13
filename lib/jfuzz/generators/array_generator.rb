@@ -5,13 +5,9 @@ require "jfuzz/generators/generator"
 module Jfuzz
   class ArrayGenerator < Generator
     def generate
-      unless items.any?
-        raise "Cannot generate an empty array. Please specify item types"
-      end
+      raise "Cannot generate an empty array. Please specify item types" unless items.any?
 
-      if items.kind_of?(Array)
-        return tuple_array
-      end
+      return tuple_array if items.is_a?(Array)
       random_array
     end
 

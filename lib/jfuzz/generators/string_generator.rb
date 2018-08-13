@@ -4,14 +4,13 @@ require "regexp-examples"
 require "date"
 require "jfuzz/generators/generator"
 
-module Jfuzz 
+module Jfuzz
   class StringGenerator < Generator
-
     DATE = "date"
     TIME = "time"
     DATE_TIME = "date-time"
 
-    CHARSET = Array('A'..'Z') + Array('a'..'z') + Array(0..9)
+    CHARSET = Array("A".."Z") + Array("a".."z") + Array(0..9)
 
     def generate
       if format?
@@ -34,6 +33,7 @@ module Jfuzz
       Array.new(length) { CHARSET.sample }.join
     end
 
+    # rubocop:disable Metrics/AbcSize
     def generate_from_format
       str = case format
             when DATE
@@ -46,18 +46,15 @@ module Jfuzz
               raise "Unsupported format: #{format}"
             end
 
-      if max_length?
-        return str[0..max_length - 1]
-      end
+      return str[0..max_length - 1] if max_length?
       str
     end
+    # rubocop:enable Metrics/AbcSize
 
     def generate_from_pattern
       str = Regexp.new(pattern).random_example
 
-      if max_length?
-        return str[0..max_length - 1]
-      end
+      return str[0..max_length - 1] if max_length?
       str
     end
 
