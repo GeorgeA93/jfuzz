@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require "json_schema"
 require "jfuzz/property_fuzzer"
 
 module Jfuzz
@@ -16,7 +17,18 @@ module Jfuzz
       schema_contents = File.read(schema_path)
       schema = JSON.parse(schema_contents)
 
-      property_fuzzer.fuzz_property(schema)
+      fuzzed = property_fuzzer.fuzz_property(schema)
+
+      json_schema = JsonSchema.parse!(schema)
+      is_valid, validation_errors = json_schema.validate(fuzzed)
+
+      unless is_valid
+        raise "Error in the report validation. Produced invalid JSON file " \
+          "according to JSON schema #{schema_path}. " \
+          "Validation errors: #{validation_errors}"
+      end
+
+      fuzzed
     end
 
     private

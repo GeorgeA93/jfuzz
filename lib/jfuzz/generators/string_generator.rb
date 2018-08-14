@@ -7,8 +7,16 @@ require "jfuzz/generators/generator"
 module Jfuzz
   class StringGenerator < Generator
     DATE = "date"
-    TIME = "time"
     DATE_TIME = "date-time"
+
+    DATE_REGEXP = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/
+    TIME_REGEXP = /\A(\d{2}):(\d{2}):(\d{2})\z/	
+    DATE_TIME_REGEXP = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-2][0-9]:[0-5][0-9]:[0-5][0-9](\.[0-9]+)?(Z|[\-+][0-9]{2}:[0-5][0-9])$/
+
+    FORMATS = {
+      DATE => DATE_REGEXP,
+      DATE_TIME => DATE_TIME_REGEXP,
+    }.freeze
 
     CHARSET = Array("A".."Z") + Array("a".."z") + Array(0..9)
 
@@ -35,17 +43,7 @@ module Jfuzz
 
     # rubocop:disable Metrics/AbcSize
     def generate_from_format
-      str = case format
-            when DATE
-              Time.at(rand * Time.now.to_i).to_date.to_s
-            when TIME
-              Time.at(rand * Time.now.to_i).to_datetime.to_s
-            when DATE_TIME
-              Time.at(rand * Time.now.to_i).to_s
-            else
-              raise "Unsupported format: #{format}"
-            end
-
+      str = FORMATS[format].random_example
       return str[0..max_length - 1] if max_length?
       str
     end

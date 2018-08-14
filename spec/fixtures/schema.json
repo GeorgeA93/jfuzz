@@ -22,8 +22,8 @@
           "type": "integer",
           "title": "The Width Schema ",
           "multipleOf": 10,
-          "maximum": "250",
-          "minimum": "10",
+          "maximum": 250,
+          "minimum": 10,
           "default": 0
         },
         "height": {
@@ -31,8 +31,8 @@
           "type": "integer",
           "title": "The Height Schema ",
           "multipleOf": 4,
-          "maximum": "250",
-          "minimum": "4",
+          "maximum": 250,
+          "minimum": 4,
           "default": 0,
           "examples": [
             8
@@ -63,15 +63,14 @@
       "$id": "/properties/name",
       "type": "string",
       "title": "The Name Schema ",
-      "maxLength": "10",
       "pattern": "a{3,6}d{20}"
     },
     "testing": {
       "$id": "/properties/testing",
       "type": "string",
       "title": "The testing Schema ",
-      "minLength": "4",
-      "maxLength": "25" },
+      "minLength": 4,
+      "maxLength": 25 },
     "thing": {
       "$id": "/properties/thing",
       "title": "The thing Schema ",
@@ -85,7 +84,6 @@
       "examples": [
         12.5
       ],
-      "multipleOf": "0.01",
       "maximum": 1203,
       "minimum": 10
     },
@@ -132,6 +130,7 @@
     "thing",
     "price",
     "tags",
-    "address"
+    "address",
+    "date"
   ]
 }
